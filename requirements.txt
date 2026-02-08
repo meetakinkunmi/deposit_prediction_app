@@ -6,3 +6,4 @@ matplotlib==3.10.8
 numpy==2.4.1
 scikit-learn==1.8.0
 packaging==24.2
+pandas==3.0.0
