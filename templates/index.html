@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>predict deposit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+        }
+        .container {
+            width: 420px;
+            margin: 60px auto;
+            padding: 25px;
+            background: #ffffff;
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+        input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            background-color: #0b5ed7;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        button:hover {
+            background-color: #084298;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 12px;
+            background: #e9ecef;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h2>Customers Deposit Prediction App</h2>
+
+    <form action="/predict" method="post">
+        <!-- Example input features -->
+        <!-- Numeric features -->
+        <label>Age (Customer's age in number)</label>
+        <input type="number" step="any" name="age" required>
+
+        <label>Balance (Average yearly balnce in Euros)</label>
+        <input type="number" step="any" name="balance" required>
+
+        <label> Day (Last contact day of the month in number)</label>
+        <input type="number", step="any", name="previous" required>
+
+        <label> Duration (Last contact duration in seconds)</label>
+        <input type="number", step="any", name="duration" required>
+
+        <label> Campaign (Number of contacts performed during campaign including the last)</label>
+        <input type="number", step="any", name="campaign" required>
+
+        <label> Passed Days (Number of days passed after customer contacted from last campaign)</label>
+        <input type="number", step="any", name="pdays" required>
+
+        <label> Previous (Number of times customer contacted before the campaign)</label>
+        <input type="number", step="any", name="previous" required>
+
+        <!-- Categorical feature -->
+        <label>Job</label>
+        <select name="job" required>
+            <option value="" disabled selected>Select category</option>
+            <option value="admin">Admin</option>
+            <option value="unknown">Unknown</option>
+            <option value="unemployed">Unemployed</option>
+            <option value="management">Management</option>
+            <option value="housemaid">Housemaid</option>
+            <option value="entrepreneur">Entrepreneur</option>
+            <option value="student">Student</option>
+            <option value="blue-collar">Blue-collar</option>
+            <option value="self-employed">Self-employed</option>
+            <option value="retired">retired</option>
+            <option value="technician">Technician</option>
+            <option value="services">Services</option>
+        </select>
+
+        <label>Marital Status</label>
+        <select name="marital" required>
+            <option value="" disabled selected>Select category</option>
+            <option value="married">Married</option>
+            <option value="divorced">Divorced</option>
+            <option value="single">Single</option>
+        </select>
+        
+        <label> Education Level</label>   
+        <select name="education" required>
+            <option value="" disabled selected>Select category</option>
+            <option value="unknown">Unknown</option>
+            <option value="secondary">Secondary</option>
+            <option value="primary">Primary</option>
+            <option value="tertiary">Tertiary</option>
+        </select>            
+
+        <label> Default (Has credit in default?)</label>   
+        <select name="default" required>
+            <option value="" disabled selected>Select category</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>                    
+        
+        <label> Housing (Has housing loan?) </label>
+        <select name="housing" required>
+            <option value="" disabled selected>Select category</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+
+        <label> Loan (Has personal loan?) </label>
+        <select name="loan" required>
+            <option value="" disabled selected>Select category</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+
+        <label> Contact (Contact communication type) </label>
+        <select name="contact" required>
+            <option value="" disabled selected>Select category</option>
+            <option value="unknown">Unknown</option>
+            <option value="telephone">Telephone</option>
+            <option value="cellular">Cellular</option>
+        </select>
+                
+        <label>Month (Last contact month of the year)</label>
+        <select name="month" required>
+            <option value="" disabled selected>Select category</option>
+            <option value="jan">January</option>
+            <option value="feb">February</option>
+            <option value="mar">March</option>
+            <option value="apr">April</option>
+            <option value="may">May</option>
+            <option value="jun">June</option>
+            <option value="jul">July</option>
+            <option value="aug">August</option>
+            <option value="sep">Setptember</option>
+            <option value="oct">Octomber</option>
+            <option value="nov">November</option>
+            <option value="dec">December</option>
+        </select>        
+        
+        <label> Previous Outcome (Outcome of the previous marketing campaign ) </label>
+        <select name="poutcome" required>
+            <option value="" disabled selected>Select category</option>
+            <option value="unknown">Unknown</option>
+            <option value="other">Other</option>
+            <option value="failure">Failure</option>
+            <option value="success">Success</option>
+        </select>
+        
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if prediction is not none %}
+        <div class="result">
+            Prediction: {{ prediction }}
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>

@@ -1,0 +1,8 @@
+venv/
+.env
+__pycache__/
+*.pyc
+.DS_Store
+
+deposit_prediction_model.ipynb
+marketing_campaign_analysis.pbix
