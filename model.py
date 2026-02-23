@@ -3,16 +3,16 @@ import pandas as pd
 from sklearn.utils import resample
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
+from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 import pickle
+from sklearn.ensemble import RandomForestClassifier
+import joblib
 
-# Load data
-df = pd.read_excel("bank-full.xlsx")
-print(df.head())
+df = pd.read_excel("bank-full.xlsx")    # Load data
 
-# Separating classes for upsampling
+# Separating target classes for upsampling
 not_deposit = df[df["y"] == 'no']
 deposit = df[df["y"] == 'yes']
 
@@ -25,7 +25,11 @@ deposit_upsampled = pd.DataFrame(resample(deposit,
 # Combine upsampled minority class with majority class
 upsampled = pd.concat([deposit_upsampled, not_deposit], axis=0)
 
-# Splitting the data into target and predictors
+upsampled = upsampled.drop('duration', axis=1)  # Drop Duration feature due to data leakage
+
+upsampled = upsampled.reset_index(drop=True) # Reset the index duplicated from sampling
+
+# Splitting the data into target and features
 y = upsampled['y']
 
 X = upsampled.drop("y", axis=1)
@@ -41,15 +45,16 @@ X_cat = X.select_dtypes(include=['str']).columns
 preprocessor = ColumnTransformer(
     transformers=[
         ('numeric', StandardScaler(), X_num),
-        ('categorical', OneHotEncoder(drop='first', handle_unknown='ignore'), X_cat)
+        ('categorical', OneHotEncoder(drop='first', handle_unknown='ignore', sparse_output=False), X_cat)
     ]
-)
+).set_output(transform="pandas")
 
 # Pipeline to handle preprocess and classification
 pipe = Pipeline(
     steps=[
         ('preprocessor', preprocessor),
-        ('clasiffier', LogisticRegression(max_iter=500))
+        ('selector', SelectKBest(score_func=f_classif, k=20)),
+        ('classifier', RandomForestClassifier(n_estimators=100, random_state=42))
     ]
 )
 
@@ -57,4 +62,4 @@ pipe = Pipeline(
 pipe.fit(X_train, y_train)
 
 # Make pickle file of the model
-pickle.dump(pipe, open("model.pkl", "wb"))
+joblib.dump(pipe, 'model.pkl.z', compress=3)
