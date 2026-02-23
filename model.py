@@ -6,7 +6,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
-import pickle
 from sklearn.ensemble import RandomForestClassifier
 import joblib
 

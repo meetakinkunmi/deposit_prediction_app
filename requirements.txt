@@ -8,4 +8,5 @@ scikit-learn==1.8.0
 packaging==24.2
 pandas==3.0.0
 pyarrow==20.0.0
-io==
+io
+base64
