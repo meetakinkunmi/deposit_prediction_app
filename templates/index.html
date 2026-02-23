@@ -152,13 +152,6 @@
             <option value="no">No</option>
         </select>
 
-        <label> Housing (Has housing loan?) </label>
-        <select name="housing" required>
-            <option value="" disabled selected>Select category</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-        </select>
-
         <label> Loan (Has personal loan?) </label>
         <select name="loan" required>
             <option value="" disabled selected>Select category</option>
@@ -226,7 +219,7 @@
         Confidence Level: <strong>{{ probability }}%</strong>
     </div>
 
-    <img src="{{ chart_url }}" class="chart-img" alt="Feature Importance Chart">
+    <img src="{{ plot_url }}" class="chart-img" alt="Feature Importance Chart">
     
     <p style="font-size: 11px; color: #888; text-align: center; margin-top: 5px;">
         *Top features driving this specific prediction

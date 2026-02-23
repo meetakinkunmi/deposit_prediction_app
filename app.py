@@ -1,16 +1,16 @@
 import numpy as np
 import pandas as pd
 from flask import Flask, jsonify, request, render_template
-import pickle
 import matplotlib.pyplot as plt
 import io
 import base64
+import joblib
 
 # Create Flask app
 app = Flask(__name__)
 
 # Load the pickle model
-model = pickle.load(open('model.pkl', 'rb'))
+model = joblib.load(open('model.pkl.z', 'rb'))
 
 @app.route('/')
 def home():
@@ -27,8 +27,8 @@ def predict():
 
     # Getting the Features Importance chart
     importances = model.named_steps['classifier'].feature_importances_
-    feature_names = model.named_steps['prep'].get_feature_names_out()
-    featured_var = model.named_steps['slector'].get_support()
+    feature_names = model.named_steps['preprocessor'].get_feature_names_out()
+    featured_var = model.named_steps['selector'].get_support()
     final_features = feature_names[featured_var]
 
     plt.figure(figsize=(8,4))
@@ -46,7 +46,7 @@ def predict():
     return render_template(
     "index.html", prediction=predidction_message,
     probability=prediction_confidence,
-    chart_url=f"data:image/png;base64,{chart_url}"
+    plot_url = f"data:image/png;base64,{chart_url}"
     )
 
 if __name__ == "__main__":
