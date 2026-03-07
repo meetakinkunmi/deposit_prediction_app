@@ -6,8 +6,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, StackingClassifier
+from sklearn.linear_model import LogisticRegression
 import joblib
+from sklearn.metrics import classification_report, confusion_matrix
 
 df = pd.read_excel("bank-full.xlsx")    # Load data
 
@@ -48,12 +50,26 @@ preprocessor = ColumnTransformer(
     ]
 ).set_output(transform="pandas")
 
+# Define the base model
+base_model = RandomForestClassifier(n_estimators=100,
+                                    random_state=40)
+# Define and instantiate Meta model
+meta_model = LogisticRegression()
+
+# Define and instantiate ensemble model
+ensemble_model = StackingClassifier(
+    estimators=[("rf", base_model)],
+    final_estimator=meta_model,
+    stack_method="predict_proba",
+    cv=5,
+    n_jobs=-1
+)
 # Pipeline to handle preprocess and classification
 pipe = Pipeline(
     steps=[
         ('preprocessor', preprocessor),
         ('selector', SelectKBest(score_func=f_classif, k=20)),
-        ('classifier', RandomForestClassifier(n_estimators=100, random_state=42))
+        ('model', ensemble_model)
     ]
 )
 
