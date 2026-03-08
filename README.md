@@ -158,20 +158,13 @@ $$
 At a terminal node $( \ell )$, the predicted class is:
 
 $$
-T_b(x) 
-=
-\arg\max_k 
-\hat{P}^{(b)}(Y = k \mid x \in R_\ell)
+T_b(x) = \arg\max_k\hat{P}^{(b)}(Y = k \mid x \in R_\ell)
 $$
 
 where:
 
 $$
-\hat{P}^{(b)}(Y = k \mid x \in R_\ell)
-=
-\frac{1}{|R_\ell|}
-\sum_{i \in R_\ell}
-\mathbf{1}(y_i = k)
+\hat{P}^{(b)}(Y = k \mid x \in R_\ell)=\frac{1}{|R_\ell|}\sum_{i \in R_\ell}\mathbf{1}(y_i = k)
 $$
 
 Forest level Aggregation (Majority Voting):
@@ -179,11 +172,7 @@ Forest level Aggregation (Majority Voting):
 The Random Forest classifier is:
 
 $$
-\hat{f}_{RF}(x)
-=
-\arg\max_k
-\sum_{b=1}^{B}
-\mathbf{1}\big(T_b(x) = k\big)
+\hat{f}_{RF}(x)=\arg\max_k\sum_{b=1}^{B}\mathbf{1}\big(T_b(x) = k\big)
 $$
 
 Each tree votes and the class with the highest number of votes is selected.
@@ -193,20 +182,13 @@ Probabilistic Form:
 The estimated class probability is:
 
 $$
-\hat{P}_{RF}(Y = k \mid x)
-=
-\frac{1}{B}
-\sum_{b=1}^{B}
-\hat{P}^{(b)}(Y = k \mid x)
+\hat{P}_{RF}(Y = k \mid x)=\frac{1}{B}\sum_{b=1}^{B}\hat{P}^{(b)}(Y = k \mid x)
 $$
 
 Random Forest prediction:`
 
 $$
-\hat{f}_{RF}(x)
-=
-\arg\max_k
-\hat{P}_{RF}(Y = k \mid x)
+\hat{f}_{RF}(x)=\arg\max_k\hat{P}_{RF}(Y = k \mid x)
 $$
 
 Impurity Minimization at each split:
@@ -214,33 +196,19 @@ Impurity Minimization at each split:
 For classification, splits minimize impurity: Gini Impurity
 
 $$
-G(t)
-=
-1 -
-\sum_{k=1}^{K} p_k^2
+G(t)=1 -\sum_{k=1}^{K} p_k^2
 $$
 
 Entropy
 
 $$
-H(t)
-=
--
-\sum_{k=1}^{K}
-p_k \log p_k
+H(t)=-\sum_{k=1}^{K}p_k \log p_k
 $$
 
 The optimal split $( s^*)$ is:
 
 $$
-s^*
-=
-\arg\min_s
-\left[
-\frac{n_L}{n} I(L)
-+
-\frac{n_R}{n} I(R)
-\right]
+\s^*=\arg\min_s\left[\frac{n_L}{n} I(L)+\frac{n_R}{n} I(R)\right]
 $$
 
 where:
@@ -258,11 +226,7 @@ If each tree has:
 Then the variance of the forest is:
 
 $$
-\text{Var}(\hat{f}_{RF})
-=
-\rho \sigma^2
-+
-\frac{1-\rho}{B} \sigma^2
+\text{Var}(\hat{f}_{RF})=\rho \sigma^2+\frac{1-\rho}{B} \sigma^2
 $$
 
 As $B \to \infty$:
@@ -284,7 +248,7 @@ $$
 =
 \frac{1}{B}
 \sum_{b=1}^{B}
-T_b(x;
+\T_b(x;
 \mathcal{D}^{(b)},
 \mathcal{M}^{(b)})
 $$
