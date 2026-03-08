@@ -19,7 +19,7 @@ deposit = df[df["y"] == 'yes']
 
 # Upsample deposit
 deposit_upsampled = pd.DataFrame(resample(deposit,
-                          replace=True, # sample with replacement (we need to duplicate observations)
+                          replace=True, # sample with replacement (need to duplicate observations)
                           n_samples=len(not_deposit), # match number in minority class
                           random_state=30)) # reproducible results
 
@@ -46,11 +46,12 @@ X_cat = X.select_dtypes(include=['str']).columns
 preprocessor = ColumnTransformer(
     transformers=[
         ('numeric', StandardScaler(), X_num),
-        ('categorical', OneHotEncoder(drop='first', handle_unknown='ignore', sparse_output=False), X_cat)
+        ('categorical', OneHotEncoder(drop='first', handle_unknown='ignore',
+                                      sparse_output=False), X_cat)
     ]
 ).set_output(transform="pandas")
 
-# Define the base model
+# Define and inatantiate the base model
 base_model = RandomForestClassifier(n_estimators=100,
                                     random_state=40)
 # Define and instantiate Meta model
@@ -73,7 +74,7 @@ pipe = Pipeline(
     ]
 )
 
-# Fit the classification model
+# Fit the Meta classification model
 pipe.fit(X_train, y_train)
 
 # Make pickle file of the model
