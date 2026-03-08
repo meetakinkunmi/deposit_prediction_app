@@ -158,13 +158,20 @@ $$
 At a terminal node $( \ell )$, the predicted class is:
 
 $$
-T_b(x) = \arg\max_k\hat{P}^{(b)}(Y = k \mid x \in R_\ell)
+T_b(x) 
+=
+\arg\max_k 
+\hat{P}^{(b)}(Y = k \mid x \in R_\ell)
 $$
 
 where:
 
 $$
-\hat{P}^{(b)}(Y = k \mid x \in R_\ell)=\frac{1}{|R_\ell|}\sum_{i \in R_\ell}\mathbf{1}(y_i = k)
+\hat{P}^{(b)}(Y = k \mid x \in R_\ell)
+=
+\frac{1}{|R_\ell|}
+\sum_{i \in R_\ell}
+\mathbf{1}(y_i = k)
 $$
 
 Forest level Aggregation (Majority Voting):
@@ -208,7 +215,7 @@ $$
 The optimal split $( s^*)$ is:
 
 $$
-\s^*=\arg\min_s\left[\frac{n_L}{n} I(L)+\frac{n_R}{n} I(R)\right]
+s^* = \arg\min_s \left[ \frac{n_L}{n} I(L) + \frac{n_R}{n} I(R) \right]
 $$
 
 where:
@@ -248,7 +255,7 @@ $$
 =
 \frac{1}{B}
 \sum_{b=1}^{B}
-\T_b(x;
+T_b(x;
 \mathcal{D}^{(b)},
 \mathcal{M}^{(b)})
 $$
