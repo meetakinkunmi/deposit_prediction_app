@@ -158,20 +158,13 @@ $$
 At a terminal node $( \ell )$, the predicted class is:
 
 $$
-T_b(x) 
-=
-\arg\max_k 
-\hat{P}^{(b)}(Y = k \mid x \in R_\ell)
+T_b(x) =\arg\max_k \hat{P}^{(b)}(Y = k \mid x \in R_\ell)
 $$
 
 where:
 
 $$
-\hat{P}^{(b)}(Y = k \mid x \in R_\ell)
-=
-\frac{1}{|R_\ell|}
-\sum_{i \in R_\ell}
-\mathbf{1}(y_i = k)
+\hat{P}^{(b)}(Y = k \mid x \in R_\ell)=\frac{1}{|R_\ell|}\sum_{i \in R_\ell}\mathbf{1}(y_i = k)
 $$
 
 Forest level Aggregation (Majority Voting):
