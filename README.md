@@ -244,13 +244,7 @@ Formal Summary:
 Random Forest can finally be expressed as:
 
 $$
-\hat{f}_{RF}(x)
-=
-\frac{1}{B}
-\sum_{b=1}^{B}
-T_b(x;
-\mathcal{D}^{(b)},
-\mathcal{M}^{(b)})
+\hat{f}_{RF}(x)=\frac{1}{B}\sum_{b=1}^{B}T_b(x;\mathcal{D}^{(b)},\mathcal{M}^{(b)})
 $$
 
 Randomness is injected through:
