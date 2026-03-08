@@ -26,7 +26,9 @@ def predict():
     prediction_confidence = round(prediction * 100, 2)
 
     # Getting the Features Importance chart
-    importances = model.named_steps['classifier'].feature_importances_
+    trained_model = model.named_steps['model'].estimators_
+    rf_model = trained_model[0]
+    importances = rf_model.feature_importances_
     feature_names = model.named_steps['preprocessor'].get_feature_names_out()
     featured_var = model.named_steps['selector'].get_support()
     final_features = feature_names[featured_var]
